@@ -1,0 +1,26 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Vehicle {
+  id              Int     @id @default(autoincrement())
+  name            String? @unique(map: "name") @db.VarChar(100)
+  passengers      Int?    @db.Int
+  avg_consumption Int?    @db.Int
+  fuel_type       Int?
+  fuel            Fuel?   @relation(fields: [fuel_type], references: [id])
+}
+
+model Fuel {
+  id             Int       @id @default(autoincrement())
+  fuel_type      String?   @db.VarChar(10)
+  daily_usage    Int?
+  daily_usage_pt Int?
+  import_cost    Int?
+  vehicle        Vehicle[]
+}
