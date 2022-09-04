@@ -7,20 +7,30 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Vehicle {
-  id              Int     @id @default(autoincrement())
-  name            String? @unique(map: "name") @db.VarChar(100)
-  passengers      Int?    @db.Int
-  avg_consumption Int?    @db.Int
-  fuel_type       Int?
-  fuel            Fuel?   @relation(fields: [fuel_type], references: [id])
+model fuel {
+  id          String      @id @db.VarChar(5)
+  f_name      String      @unique(map: "f_name") @db.VarChar(20)
+  import_cost Int?
+  personal    personal[]
+  transport   transport[]
 }
 
-model Fuel {
-  id             Int       @id @default(autoincrement())
-  fuel_type      String?   @db.VarChar(10)
-  daily_usage    Int?
-  daily_usage_pt Int?
-  import_cost    Int?
-  vehicle        Vehicle[]
+model personal {
+  id              String  @id @db.VarChar(5)
+  v_name          String  @unique(map: "v_name") @db.VarChar(20)
+  avg_consumption Int?
+  fuel_type       String? @db.VarChar(5)
+  fuel            fuel?   @relation(fields: [fuel_type], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "personal_ibfk_1")
+
+  @@index([fuel_type], map: "fuel_type")
+}
+
+model transport {
+  id         String  @id @db.VarChar(5)
+  t_name     String  @unique(map: "t_name") @db.VarChar(20)
+  fuel_usage Int?
+  fuel_type  String? @db.VarChar(5)
+  fuel       fuel?   @relation(fields: [fuel_type], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "transport_ibfk_1")
+
+  @@index([fuel_type], map: "fuel_type")
 }

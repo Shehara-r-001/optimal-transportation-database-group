@@ -1,3 +1,4 @@
+import { Prisma } from '@prisma/client';
 import { GetServerSidePropsContext } from 'next';
 import React from 'react';
 import prisma from '../lib/prisma';
@@ -6,10 +7,10 @@ type Props = {
   vehicles: IVehicle[];
 };
 
-const vpage = ({ vehicles }: Props) => {
+const vpage = () => {
   return (
-    <div>
-      {vehicles?.map((vehicle) => (
+    <div className='fixed top-0 left-0'>
+      {/* {vehicles?.map((vehicle) => (
         <div key={vehicle.id}>
           <p>{vehicle.name}</p>
           <p>{vehicle.passengers}</p>
@@ -17,24 +18,28 @@ const vpage = ({ vehicles }: Props) => {
           <p>{vehicle.avg_consumption}</p>
           <p>{vehicle.fuel.fuel_type}</p>
         </div>
-      ))}
+      ))} */}
     </div>
   );
 };
 
 export async function getServerSideProps(_context: GetServerSidePropsContext) {
-  const vehicles = await prisma.vehicle.findMany({
+  // const vehicles = await prisma.vehicle.findMany({
+  //   include: {
+  //     fuel: true,
+  //   },
+  // });
+
+  const vehicles = await prisma.personal.findMany({
     include: {
       fuel: true,
     },
   });
-
-  const fuel = await prisma.fuel.findMany();
+  console.log(vehicles);
 
   return {
     props: {
       vehicles,
-      fuel,
     },
   };
 }

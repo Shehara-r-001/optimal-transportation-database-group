@@ -1,15 +1,11 @@
 import Image from 'next/image';
 import React from 'react';
-import BG01 from '../assets/images/bg01.png';
 
 const Landing = () => {
   return (
     <div>
-      <div className='h-[100vh] w-[100vw] relative'>
-        <Image src={BG01} alt='bg01' layout='fill' />
-      </div>
       <div className='fixed top-[30vh] backdrop-blur-sm text-sm'>
-        <p className='h-[40vh] w-[50vw] px-10 flex items-center text-center'>
+        <p className='h-[40vh] w-[50vw] px-10 flex items-center text-left'>
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aspernatur
           magni, iusto reprehenderit assumenda nesciunt voluptas quidem error
           aliquam voluptatibus deleniti, similique aut impedit quo minima!
