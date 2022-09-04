@@ -1,6 +1,5 @@
 import { GetServerSidePropsContext } from 'next';
 import React from 'react';
-import { PrismaClient } from '@prisma/client';
 import prisma from '../lib/prisma';
 
 type Props = {
